@@ -156,7 +156,8 @@ def skin_depth(f: NumberLike, rho: float, mu_r: float):
     surface_resistivity
 
     """
-    return sqrt(rho/(pi*f*mu_r*mu_0))
+    with np.errstate(divide='ignore'):
+        return sqrt(rho / (pi * f * mu_r * mu_0))
 
 
 def surface_resistivity(f: NumberLike, rho: float, mu_r: float):

@@ -41,12 +41,42 @@ def mocked_ff(mocker):
         ("if_bandwidth", "SENS1:BWID?", "SENS1:BWID 100", "100", 100, 100),
         ("sweep_step", "SENS1:SWE:STEP?", "SENS1:SWE:STEP 100", "100", 100, 100),
         ("sweep_time", "SENS1:SWE:TIME?", "SENS1:SWE:TIME 1.0", "1.0", 1.0, 1),
-        ("sweep_type", "SENS1:SWE:TYPE?", "SENS1:SWE:TYPE LIN", "LIN", SweepType.Linear, SweepType.Linear),
-        ("sweep_mode", "INIT1:CONT?", "INIT1:CONT OFF", "OFF", SweepMode.Single, SweepMode.Single),
-        ("measurements", "CALC1:PAR:CAT?", None, "CH4TR1,S11,CH4TR2,S12", [("CH4TR1", "S11"), ("CH4TR2", "S12")], None),
+        (
+            "sweep_type",
+            "SENS1:SWE:TYPE?",
+            "SENS1:SWE:TYPE LIN",
+            "LIN",
+            SweepType.LINEAR,
+            SweepType.LINEAR,
+        ),
+        (
+            "sweep_mode",
+            "INIT1:CONT?",
+            "INIT1:CONT OFF",
+            "OFF",
+            SweepMode.SINGLE,
+            SweepMode.SINGLE,
+        ),
+        (
+            "measurements",
+            "CALC1:PAR:CAT?",
+            None,
+            "CH4TR1,S11,CH4TR2,S12",
+            [("CH4TR1", "S11"), ("CH4TR2", "S12")],
+            None,
+        ),
     ],
 )
-def test_params(mocker, mocked_ff, param, expected_query, expected_write, query_response, expected_val, write_val):
+def test_params(
+    mocker,
+    mocked_ff,
+    param,
+    expected_query,
+    expected_write,
+    query_response,
+    expected_val,
+    write_val,
+):
     if expected_query is not None:
         mocked_ff.query.return_value = query_response
         test_query = getattr(mocked_ff.ch1, param)
